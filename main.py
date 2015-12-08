@@ -21,14 +21,14 @@ titley = 40
 score = 25
 
 # where the grid starts
-play_lcorner_x = 121
+play_lcorner_x = 60
 play_lcorner_y = 204
 
 #width of the cell in the grid
 box_width = 100
 
 # number of boxes in each row and column
-grid_width = 5
+grid_width = 6
 grid_height = 5
 
 # the right bottom corner of the grid
@@ -36,7 +36,7 @@ play_rcorner_x = play_lcorner_x + grid_width*box_width
 play_rcorner_y = play_lcorner_y + grid_height*box_width
 
 mycards = [ "cards\card1.png",  "cards\card2.png",  "cards\card3.png",  "cards\card4.png",
-            "cards\card5.png"]
+            "cards\card5.png", "cards\card6.png"]
 
 def getBoard():
     # one dimensional list
@@ -60,6 +60,7 @@ def getBoard():
     return board
 
 myboard = getBoard()
+print(myboard)
 
 def checkHorz():
     isGood = 1
@@ -126,17 +127,19 @@ while True:
     textRectObj.center = (movesx, movesy)
     displaysurf.blit(textSurfaceObj, textRectObj)
 
-    rowindex = 0
+    colindex = 0
     for cardlist in myboard:
-        colindex = 0
+        rowindex = 0
         for card in cardlist:
             imgx = colindex * box_width + play_lcorner_x
             imgy = rowindex * box_width + play_lcorner_y
             myimg = pygame.image.load(myboard[colindex][rowindex])
             displaysurf.blit(myimg, (imgx, imgy))
 
-            colindex += 1
-        rowindex += 1
+            rowindex += 1
+        colindex += 1
+        if(rowindex>=5):
+            rowindex = 4
 
     for event in pygame.event.get():
         if event.type == QUIT:
