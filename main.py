@@ -61,6 +61,35 @@ def getBoard():
 
 myboard = getBoard()
 
+def checkHorz():
+    isGood = 1
+    for x in range (0,5):
+        myString = myboard[0][x]
+        print("Row: " + str(x))
+        for y in range (1,5):
+            if myString == myboard[y][x]:
+                print("We're good")
+                continue
+            else:
+                isGood = 0;
+                break;
+    return isGood
+
+def checkVert():
+    isGood =1
+    for x in range (0,5):
+        myString = myboard[x][0]
+        print("Column: " + str(x))
+        for y in range (1,5):
+            curString = myboard[x][y]
+            if myString == curString:
+                print("We're good")
+                continue
+            else:
+                isGood = 0;
+                break;
+    return isGood
+
 #variables to keep track of where the user clicked
 box_x = -1
 box_y = -1
@@ -131,6 +160,13 @@ while True:
                     #swaps the selections
                     myboard[box_x][box_y] = prev_selected
                     myboard[selected_x][selected_y] = box_selected
+
+                    #checks to see if we've won
+                    #checkWinHorz = checkHorz()
+                    checkWinVert = checkVert()
+
+                    if checkWinVert == 1:
+                        print("You've won!")
 
                     if box_x == selected_x and box_y == selected_y:
                         print("Same box")
