@@ -1,4 +1,4 @@
-# Card Game Project 2
+# Sort Mania
 # Seth Loew and Zared Hollabaugh 
 
 #import the necessary libraries
@@ -62,6 +62,7 @@ def getBoard():
 myboard = getBoard()
 print(myboard)
 
+#checks for a horizontally-oriented victory
 def checkHorz():
     isGood = 1
     for x in range (0,5):
@@ -69,13 +70,13 @@ def checkHorz():
         print("Row: " + str(x))
         for y in range (1,5):
             if myString == myboard[y][x]:
-                print("We're good")
                 continue
             else:
                 isGood = 0;
                 break;
     return isGood
 
+#checks for a vertically-oriented victory
 def checkVert():
     isGood =1
     for x in range (0,5):
@@ -84,7 +85,6 @@ def checkVert():
         for y in range (1,5):
             curString = myboard[x][y]
             if myString == curString:
-                print("We're good")
                 continue
             else:
                 isGood = 0;
