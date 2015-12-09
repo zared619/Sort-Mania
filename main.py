@@ -91,16 +91,32 @@ print(myboard)
 
 mycoloredboard = getcoloredBoard()
 print(mycoloredboard)
-    
+
+def minimumEditDistance(s1,s2):
+    if len(s1) > len(s2):
+        s1,s2 = s2,s1
+    distances = range(len(s1) + 1)
+    for index2,char2 in enumerate(s2):
+        newDistances = [index2+1]
+        for index1,char1 in enumerate(s1):
+            if char1 == char2:
+                newDistances.append(distances[index1])
+            else:
+                newDistances.append(1 + min((distances[index1],
+                                             distances[index1+1],
+                                             newDistances[-1])))
+        distances = newDistances
+    return distances[-1]
 
 def checkHorz():
     isGood = 1
     for x in range (0,5):
-        myString = myboard[0][x]
-        print("Row: " + str(x))
+        myString = mycoloredboard[0][x]
+        print(myString)
         for y in range (1,5):
-            if myString == myboard[y][x]:
-                print("We're good")
+            levDistance = minimumEditDistance(myString,mycoloredboard[y][x])
+            print(levDistance)
+            if  levDistance ==1:
                 continue
             else:
                 isGood = 0;
@@ -111,11 +127,9 @@ def checkVert():
     isGood =1
     for x in range (0,5):
         myString = myboard[x][0]
-        print("Column: " + str(x))
         for y in range (1,5):
             curString = myboard[x][y]
             if myString == curString:
-                print("We're good")
                 continue
             else:
                 isGood = 0;
@@ -137,6 +151,7 @@ def gameOver():
         textRect2.center = (400, 250)
         displaysurf.blit(textSurf2, textRect2)
         pygame.display.update()
+        time.sleep(7)
     else:
         fontObj2 = pygame.font.SysFont('times', 25)
         textSurf2 = fontObj2.render('Sorry, you lost... Your score is ' + str(score), True, black, white)
@@ -144,6 +159,7 @@ def gameOver():
         textRect2.center = (400, 250)
         displaysurf.blit(textSurf2, textRect2)
         pygame.display.update()
+        time.sleep(7)
 
 
 #variables to keep track of where the user clicked
@@ -294,7 +310,7 @@ while True:
             break
 
     if welcomeMode == False and whiteSide == False:
-        msg = "Score: \t" + str(score)
+        msg = "Score: " + str(score)
         textSurfaceObj = fontObj.render(msg, True, white )
         textRectObj = textSurfaceObj.get_rect()
         textRectObj.center = (movesx, movesy)
@@ -339,9 +355,9 @@ while True:
 
                         #checks to see if we've won
                         checkWinHorz = checkHorz()
-                        checkWinVert = checkVert()
+                        #checkWinVert = checkVert()
 
-                        if checkWinVert == 1 and checkWinHorz == 1:
+                        if checkWinHorz == 1:
                             gameOver()
                             endGame = True
                             break
